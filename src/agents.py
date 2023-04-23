@@ -32,7 +32,11 @@ class StatelessMonteCarloAgent(Agent):
         super().__init__(agent_info)
         self.prev_state  = 0
         self.prev_action = 0
+        self.opp_hand    = 7
         
+    def update_opp_hand(num):
+        self.opp_hand = num
+    
     #I need additional information including the cards_seen for player1
     #and the number of cards held by player 2
     def step(self, state_dict, actions_dict):
