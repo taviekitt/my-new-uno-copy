@@ -32,11 +32,7 @@ class StatelessMonteCarloAgent(Agent):
         super().__init__(agent_info)
         self.prev_state  = 0
         self.prev_action = 0
-        self.opp_hand    = 7
         
-    def update_opp_hand(num):
-        self.opp_hand = num
-    
     #I need additional information including the cards_seen for player1
     #and the number of cards held by player 2
     def step(self, state_dict, actions_dict):
@@ -148,7 +144,26 @@ class QLearningAgent(Agent):
         # (2) Save and return action/state
         self.prev_state  = state
         self.prev_action = action
-      
+
+class randomPlay(Agent):
+
+    def __init__(self, agent_info:dict):
+
+        super().__init__(agent_info)
+        self.state_seen  = list()
+        self.action_seen = list()
+        self.q_seen      = list()
+    
+    def step(self, state_dict, actions_dict):
+        """
+        Randomly plays a possible action
+        """
+        actions_possible = [key for key,val in actions_dict.items() if val != 0]         
+        action = random.choice(actions_possible)
+        
+        return action
+    
+    
         
 class MonteCarloAgent(Agent):
 
