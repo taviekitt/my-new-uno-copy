@@ -39,7 +39,7 @@ class StatelessMonteCarloAgent(Agent):
         ACTION_ITERS = 1000
         actions_possible = [key for key,val in actions_dict.items() if val != 0]
         #random.shuffle(actions_possible) #necessary?
-        win_loss_tracker = np.zeros(2, len(actions_possible)) #first row records total winds, second losses
+        win_loss_tracker = np.zeros(2, len(actions_possible)) #first row records total wins, second losses
         if len(actions_possible) == 2: #if only one feasible action
             return actions_possible[0] #play it
         for action in actions_possible:
@@ -51,10 +51,12 @@ class StatelessMonteCarloAgent(Agent):
                 #play game with this hand playing randomly
                 #and player 1 playing randomly as well?
                 #record who won in win_loss_tracker based on action (first card played)
-                if won:
+                won = randomgame(open_card, our_hand, opp_hand, played_cards).winner
+                print("player: ", won, " won the simulated battle)
+                if won == 1:
                     win_loss_tracker[0][action] += 1
                 else:
-                    win_loss_tracker[1][action] += 2
+                    win_loss_tracker[1][action] += 1
         #calculate win_loss_proportions based on tracker -> tracker[0] / tracker.sum of column
         #play action with highest likelihood of winning
         return action
