@@ -87,8 +87,11 @@ class Turn(object):
                              opponent = player_pas, 
                              penalty  = 2)
             
-        if player_act != self.player_1 and algorithm == "statelessmonte":
-            player_pas.agent.update_opp_hand(len(player_act.hand))
+        if player_act != self.player_1 and algorithm == "statelessmonte": #update agent
+            player_pas.agent.opp_hand = len(player_act.hand)
+            
+        if algorithm == "statelessmonte":
+            player_pas.agent.played_cards = deck.cards_disc
         
     def action_plus(self, player, opponent, penalty):
         """

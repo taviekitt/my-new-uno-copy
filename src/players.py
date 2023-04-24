@@ -146,6 +146,8 @@ class Player(object):
 
         # Selected card is played
         self.card_play = card
+        if algorithm == "statelessmonte":
+            agent.card_open = card
         self.hand.remove(card)
         self.hand_play.pop()
         deck.discard(card)

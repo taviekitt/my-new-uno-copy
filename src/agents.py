@@ -32,6 +32,9 @@ class StatelessMonteCarloAgent(Agent):
         super().__init__(agent_info)
         self.prev_state  = 0
         self.prev_action = 0
+        self.opp_hand = 7
+        self.open_card = None #current open card
+        self.played_cards = [] #cards discarded
         
     #I need additional information including the cards_seen for player1
     #and the number of cards held by player 2
@@ -61,13 +64,17 @@ class StatelessMonteCarloAgent(Agent):
         #play action with highest likelihood of winning
         return action
     
-    def assumeHand(opponent_card_num, played_cards):
-         for i in range (opponent_card_num):
+
+    def assumeHand(played_cards):
+         for i in range (opp_hand):
             self.player_2.draw(self.deck, self.card_open)
         
     
     def update(self, state_dict, action):
-
+        return 0
+    
+    
+        
     
 class QLearningAgent(Agent):
     
