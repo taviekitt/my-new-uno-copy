@@ -55,20 +55,27 @@ class StatelessMonteCarloAgent(Agent):
                 #and player 1 playing randomly as well?
                 #record who won in win_loss_tracker based on action (first card played)
                 won = randomgame(open_card, our_hand, opp_hand, played_cards).winner
-                print("player: ", won, " won the simulated battle)
+                print("player: ", won, "won the simulated battle")
                 if won == 1:
                     win_loss_tracker[0][action] += 1
                 else:
                     win_loss_tracker[1][action] += 1
         #calculate win_loss_proportions based on tracker -> tracker[0] / tracker.sum of column
         #play action with highest likelihood of winning
+                      
         return action
     
 
-    def assumeHand(played_cards):
-         for i in range (opp_hand):
-            self.player_2.draw(self.deck, self.card_open)
+    def assumeHand(played_cards): #returns a list of cards
+        opp_cards = Deck().discardList(our_hand) #need to code for our_hand
+        opp_cards.discardList(played_cards)
+        opp_cards.discard(open_card)
+        length = len(opp_cards)
+        for i in range(length - opp_hand):
+            num = random.randint(0, len(opp_cards))
+            opp_cards.discard(opp_cards[num])
         
+        return opp_cards.cards #returns just a list, not of the deck object class
     
     def update(self, state_dict, action):
         return 0

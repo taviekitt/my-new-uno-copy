@@ -22,7 +22,7 @@ class RandomGame(open_card, our_hand, opp_hand, played_cards):
         self.player_1.set_hand(our_hand)
         self.player_2.set_hand(opp_hand)
         self.turn = Turn(
-            deck = Deck().discardList(played_cards),
+            deck = Deck().discardList(pdlayed_cards),
             player_1=self.player_1,
             player_2=self.player_2,
             agent=randomPlay
