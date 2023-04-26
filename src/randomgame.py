@@ -1,13 +1,5 @@
-import time
-from src.agents import QLearningAgent, MonteCarloAgent
-from src.players import Player
-from src.turn import Turn
-from src.cards import Card, Deck
-from src.utils import check_win, block_print, enable_print, bold
-import config as conf
 
-
-class RandomGame(open_card, our_hand, opp_hand, played_cards):
+class RandomGame(object):
     """
     Randomly plays feasible moves from the two hands and returns a winner. 
     Create two plays and set_hand to our_hand and opp_hand
@@ -21,8 +13,9 @@ class RandomGame(open_card, our_hand, opp_hand, played_cards):
         self.player_2 = Player(2, agent=randomPlay)
         self.player_1.set_hand(our_hand)
         self.player_2.set_hand(opp_hand)
+        self.card_open = open_card
         self.turn = Turn(
-            deck = Deck().discardList(pdlayed_cards),
+            deck = Deck().discardList(played_cards),
             player_1=self.player_1,
             player_2=self.player_2,
             agent=randomPlay

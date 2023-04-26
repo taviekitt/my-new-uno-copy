@@ -16,6 +16,7 @@ class Player(object):
         self.state        = dict()
         self.actions      = dict()
         self.action       = 0
+        self.agent        = agent
         agent.prev_state  = 0
     
     def evaluate_hand(self, card_open):
@@ -110,7 +111,7 @@ class Player(object):
         self.identify_state(card_open)
         self.identify_action()
         
-        # Agent selects action
+        # selects action
         self.action = agent.step(self.state, self.actions)
 
         # Selected action searches corresponding card
@@ -146,8 +147,6 @@ class Player(object):
 
         # Selected card is played
         self.card_play = card
-        if algorithm == "statelessmonte":
-            agent.card_open = card
         self.hand.remove(card)
         self.hand_play.pop()
         deck.discard(card)

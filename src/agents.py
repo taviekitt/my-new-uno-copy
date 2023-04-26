@@ -3,6 +3,8 @@ import numpy as np
 import random
 
 import src.state_action_reward as sar
+from src.randomgame import RandomGame
+from src.cards import Card, Deck
 
 
 class Agent(object):
@@ -33,7 +35,7 @@ class StatelessMonteCarloAgent(Agent):
         self.prev_state  = 0
         self.prev_action = 0
         self.opp_hand = 7
-        self.open_card = None #current open card
+        self.open_card = Card("RED",1) #current open card
         self.played_cards = [] #cards discarded
         
     #I need additional information including the cards_seen for player1
@@ -42,8 +44,8 @@ class StatelessMonteCarloAgent(Agent):
         ACTION_ITERS = 1000
         actions_possible = [key for key,val in actions_dict.items() if val != 0]
         #random.shuffle(actions_possible) #necessary?
-        win_loss_tracker = np.zeros(2, len(actions_possible)) #first row records total wins, second losses
-        if len(actions_possible) == 2: #if only one feasible action
+        win_loss_tracker = np.zeros((len(actions_possible)), dtype = int) #first row records total wins, second losses
+        if len(actions_possible) == 1: #if only one feasible action
             return actions_possible[0] #play it
         for action in actions_possible:
             for i in range(ACTION_ITERS):
@@ -54,16 +56,21 @@ class StatelessMonteCarloAgent(Agent):
                 #play game with this hand playing randomly
                 #and player 1 playing randomly as well?
                 #record who won in win_loss_tracker based on action (first card played)
-                won = randomgame(open_card, our_hand, opp_hand, played_cards).winner
+                won = RandomGame(self.open_card, self.our_hand, self.opp_hand, self.played_cards).winner
                 print("player: ", won, "won the simulated battle")
                 if won == 1:
-                    win_loss_tracker[0][action] += 1
-                else:
-                    win_loss_tracker[1][action] += 1
+                    win_loss_tracker[action] += 1
         #calculate win_loss_proportions based on tracker -> tracker[0] / tracker.sum of column
+        max_win = 0
+        index = 0
+        for i in range(len(win_loss_tracker)):
+            if max_win < win_loss_tracker[i]:
+                max_win = win_loss_tracker[i]
+                index = i
+        
         #play action with highest likelihood of winning
                       
-        return action
+        return action_possible[index]
     
 
     def assumeHand(played_cards): #returns a list of cards
@@ -79,9 +86,6 @@ class StatelessMonteCarloAgent(Agent):
     
     def update(self, state_dict, action):
         return 0
-    
-    
-        
     
 class QLearningAgent(Agent):
     
@@ -178,7 +182,6 @@ class randomPlay(Agent):
         action = random.choice(actions_possible)
         
         return action
-    
     
         
 class MonteCarloAgent(Agent):

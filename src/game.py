@@ -1,6 +1,6 @@
 import time
-
-from src.agents import QLearningAgent, MonteCarloAgent
+print("here")
+from src.agents import StatelessMonteCarloAgent
 from src.players import Player
 from src.turn import Turn
 from src.cards import Card, Deck
@@ -14,7 +14,6 @@ class Game(object):
     It initialized with two players and a turn object.
     """
     def __init__(self, player_1_name, player_2_name, starting_name, agent, algorithm, comment):
-        
         if comment == False: block_print()
         
         self.player_1 = Player(player_1_name, agent=agent)
@@ -25,7 +24,6 @@ class Game(object):
             player_2=self.player_2, 
             agent=agent
         )
-        
         self.turn_no = 0
         self.winner = 0
 
@@ -33,6 +31,7 @@ class Game(object):
         while self.winner == 0:
             self.turn_no += 1
             card_open = self.turn.card_open
+            self.player_1.agent.open_card = card_open
             bold (f'\n---------- TURN {self.turn_no} ----------')
             print (f'\nCurrent open card: {self.turn.card_open.print_card()}')
 
@@ -82,15 +81,16 @@ def tournament(iterations, algo, comment, agent_info):
     A function that iterates various Games and outputs summary statistics over all executed simulations.
     """
     timer_start = time.time()
-    
     # Selection of algorithm
     global agent, algorithm
     algorithm = algo
     
     if algo == "q-learning":
         agent = QLearningAgent(agent_info)
+    elif algo == "statelessmonte":
+        agent = StatelessMonteCarloAgent(agent_info)
     else:
-        agent = MonteCarloAgent(agent_info)
+        agent = randomPlay(agent_info)
     
     winners, turns, coverage = list(), list(), list()
 
