@@ -21,7 +21,9 @@ class Player(object):
         self.num_opp_hand = 7
     
     def set_hand(self, new_hand):
-        self.hand = new_hand
+        if type(new_hand) == 'int':
+            print("Error in set_hand. new_hand is int")
+        self.hand = new_hand[:]
     
     def evaluate_hand(self, card_open):
         """
