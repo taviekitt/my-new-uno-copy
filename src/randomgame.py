@@ -1,3 +1,11 @@
+import time
+print("here")
+from src.randomplay import randomPlay
+from src.players import Player
+from src.turn import Turn
+from src.cards import Card, Deck
+from src.utils import check_win, block_print, enable_print, bold
+import config as conf
 
 class RandomGame(object):
     """
@@ -15,9 +23,9 @@ class RandomGame(object):
         self.player_2.set_hand(opp_hand)
         self.card_open = open_card
         self.turn = Turn(
-            deck = Deck().discardList(played_cards),
-            player_1=self.player_1,
-            player_2=self.player_2,
+            deck=Deck(), #TODO: figure out how to use remove_list(played_cards) to remove discarded cards
+            player_1=self.player_1, 
+            player_2=self.player_2, 
             agent=randomPlay
         )
         self.turn_no = 0

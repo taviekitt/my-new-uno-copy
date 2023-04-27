@@ -52,8 +52,9 @@ class Deck(object):
     
     def discardList(self, cardList):
         for card in cardList:
-            self.cards_disc.append(card)
-            self.cards.remove(card)
+            if card in self.cards:
+                self.cards_disc.append(card)
+                self.cards.remove(card)
     
     def shuffle(self):
         random.shuffle(self.cards)

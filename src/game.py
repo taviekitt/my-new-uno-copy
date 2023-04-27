@@ -88,7 +88,7 @@ def tournament(iterations, algo, comment, agent_info):
     if algo == "q-learning":
         agent = QLearningAgent(agent_info)
     elif algo == "statelessmonte":
-        agent = StatelessMonteCarloAgent(agent_info)
+        agent = StatelessMonteCarloAgent(agent_info) #CALLED HERE. What is in agent_info?
     else:
         agent = randomPlay(agent_info)
     

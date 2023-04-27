@@ -1,4 +1,5 @@
 from src.cards import Card
+from src.cards import Deck
 from src.utils import check_win
 
 
@@ -17,8 +18,15 @@ class Turn(object):
         self.deck = deck
         self.player_1 = player_1
         self.player_2 = player_2
-        self.card_open = self.deck.draw_from_deck()
+        self.card_open = None
+        if deck != None:
+             self.card_open = self.deck.draw_from_deck()
+        else:
+            print("new deck (see turn.py)")
+            self.card_open = Deck().draw_from_deck()
         self.start_up()
+        
+            
     
     def start_up(self):
         while self.card_open.value not in range(0,10):
@@ -87,15 +95,15 @@ class Turn(object):
                              opponent = player_pas, 
                              penalty  = 2)
             
-        if player_act != self.player_1 and algorithm == "statelessmonte": #update agent
-            player.pas_agent.opp_hand = len(player_act.hand)
-            player.pas_agent.open_card = card_open
-        elif player_act == self.player_1 and algorithm == "statelessmonte":
-            player_act.agent.our_hand = player_act.hand
-            player_act.agent_open_card = self.card_open
+        #if player_act != self.player_1 and algorithm == "statelessmonte": #update agent
+            #player.pas_agent.opp_hand = len(player_act.hand) #TODO: where are these stored?
+            #player.pas_agent.open_card = card_open #TODO: do these exist?
+       # elif player_act == self.player_1 and algorithm == "statelessmonte":
+            #player_act.agent.our_hand = player_act.hand #TODO: where are these stored?
+            #player_act.agent_open_card = self.card_open #TODO: do these exist?
             
-        if algorithm == "statelessmonte":
-            player_pas.agent.played_cards = deck.cards_disc
+        #if algorithm == "statelessmonte":
+            #player_pas.agent.played_cards = self.deck.cards_disc
         
     def action_plus(self, player, opponent, penalty):
         """

@@ -34,13 +34,14 @@ class StatelessMonteCarloAgent(Agent):
         super().__init__(agent_info)
         self.prev_state  = 0
         self.prev_action = 0
-        self.opp_hand = 7
-        self.open_card = Card("RED",1) #current open card
-        self.played_cards = [] #cards discarded
+        #self.hand = our_hand
+        #self.opp_hand = opp_hand #integer value
+        #self.open_card = open_card #current open card
+        #self.played_cards = played_cards #cards discarded
         
     #I need additional information including the cards_seen for player1
     #and the number of cards held by player 2
-    def step(self, state_dict, actions_dict):
+    def step(self, state_dict, actions_dict, open_card, hand, num_opp_hand, played_cards):
         ACTION_ITERS = 1000
         actions_possible = [key for key,val in actions_dict.items() if val != 0]
         #random.shuffle(actions_possible) #necessary?
@@ -55,8 +56,9 @@ class StatelessMonteCarloAgent(Agent):
                 #check that none are in player.cards_seen
                 #play game with this hand playing randomly
                 #and player 1 playing randomly as well?
-                #record who won in win_loss_tracker based on action (first card played)
-                won = RandomGame(self.open_card, self.our_hand, self.opp_hand, self.played_cards).winner
+                #record who won in win_loss_tracker based on action (first card played) 
+                won = RandomGame(open_card, hand, num_opp_hand, played_cards).winner
+                 #TODO: num_opp_hand does not update (change from 7)
                 print("player: ", won, "won the simulated battle")
                 if won == 1:
                     win_loss_tracker[action] += 1
@@ -95,7 +97,7 @@ class QLearningAgent(Agent):
         self.prev_state  = 0
         self.prev_action = 0
     
-    def step(self, state_dict, actions_dict):
+    def step(self, state_dict, actions_dict, open_card, hand, num_opp_hand, played_cards):
         """
         Choose the optimal next action according to the followed policy.
         Required parameters:
@@ -164,24 +166,6 @@ class QLearningAgent(Agent):
         # (2) Save and return action/state
         self.prev_state  = state
         self.prev_action = action
-
-class randomPlay(Agent):
-
-    def __init__(self, agent_info:dict):
-
-        super().__init__(agent_info)
-        self.state_seen  = list()
-        self.action_seen = list()
-        self.q_seen      = list()
-    
-    def step(self, state_dict, actions_dict):
-        """
-        Randomly plays a possible action
-        """
-        actions_possible = [key for key,val in actions_dict.items() if val != 0]         
-        action = random.choice(actions_possible)
-        
-        return action
     
         
 class MonteCarloAgent(Agent):
@@ -193,7 +177,7 @@ class MonteCarloAgent(Agent):
         self.action_seen = list()
         self.q_seen      = list()
     
-    def step(self, state_dict, actions_dict):
+    def step(self, state_dict, actions_dict, open_card, hand, num_opp_hand, played_cards):
         """
         Choose the optimal next action according to the followed policy.
         Required parameters:

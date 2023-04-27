@@ -18,6 +18,10 @@ class Player(object):
         self.action       = 0
         self.agent        = agent
         agent.prev_state  = 0
+        self.num_opp_hand = 7
+    
+    def set_hand(self, new_hand):
+        self.hand = new_hand
     
     def evaluate_hand(self, card_open):
         """
@@ -37,7 +41,6 @@ class Player(object):
             - deck as deck
             - card_open as card
         """
-        
         card = deck.draw_from_deck()
         self.hand.append(card)
         self.evaluate_hand(card_open)
@@ -112,7 +115,8 @@ class Player(object):
         self.identify_action()
         
         # selects action
-        self.action = agent.step(self.state, self.actions)
+        self.action = agent.step(self.state, self.actions, card_open, self.hand, self.num_opp_hand, deck.cards_disc)
+        #TODO: why is self.hand integer?
 
         # Selected action searches corresponding card
         # (1) Playing wild card
