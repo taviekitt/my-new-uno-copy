@@ -42,6 +42,7 @@ class StatelessMonteCarloAgent(Agent):
     #I need additional information including the cards_seen for player1
     #and the number of cards held by player 2
     def step(self, state_dict, actions_dict, open_card, hand, num_opp_hand, played_cards):
+        print("in step, hand is: ", type(hand))
         ACTION_ITERS = 1000
         actions_possible = [key for key,val in actions_dict.items() if val != 0]
         #random.shuffle(actions_possible) #necessary?

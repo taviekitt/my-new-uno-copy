@@ -24,6 +24,20 @@ class Player(object):
         if type(new_hand) == 'int':
             print("Error in set_hand. new_hand is int")
         self.hand = new_hand[:]
+        
+    def set_hand_num(self, num_new_hand, deck):
+        self.hand = list()
+        for i in range(num_new_hand):
+            card = deck.draw_from_deck()
+            self.hand.append(card)
+        #need to evaluate cards based on open_card?
+        
+        def draw_from_deck(self):
+            if len(self.cards) == 0:
+                self.cards = self.cards_disc
+                self.cards_disc = []
+            
+            return self.cards.pop()
     
     def evaluate_hand(self, card_open):
         """

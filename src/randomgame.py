@@ -15,15 +15,17 @@ class RandomGame(object):
     while no winner:
     """
     
-    def __init__ (self, open_card, our_hand, opp_hand, played_cards):
+    def __init__ (self, open_card, our_hand, num_opp_hand, played_cards):
         
         self.player_1 = Player(1, agent=randomPlay)
         self.player_2 = Player(2, agent=randomPlay)
         self.player_1.set_hand(our_hand)
-        self.player_2.set_hand(opp_hand)
+        deck = Deck() #TODO: figure out how to use remove_list(played_cards) to remove discarded cards
+        self.player_2.set_hand_num(num_opp_hand, deck)
         self.card_open = open_card
+        #TODO: need to evaluate hands based on open card? functionality note done in draw
         self.turn = Turn(
-            deck=Deck(), #TODO: figure out how to use remove_list(played_cards) to remove discarded cards
+            deck=deck, 
             player_1=self.player_1, 
             player_2=self.player_2, 
             agent=randomPlay
@@ -46,8 +48,8 @@ class RandomGame(object):
             self.turn.action(
                 player=player_act, 
                 opponent=player_pas, 
-                agent=agent,
-                #algorithm=algorithm
+                agent=randomPlay,
+                algorithm=None
             )
             
             if check_win(player_act) == True:

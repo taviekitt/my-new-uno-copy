@@ -63,8 +63,8 @@ class Deck(object):
         if len(self.cards) == 0:
             self.cards = self.cards_disc
             self.cards_disc = []
-            
         return self.cards.pop()
+    
     
     def show_deck(self):
         for c in self.cards:
