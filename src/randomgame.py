@@ -16,7 +16,7 @@ class RandomGame(object):
     """
     
     def __init__ (self, open_card, our_hand, num_opp_hand, played_cards):
-        
+        print("top of randomgame")
         self.player_1 = Player(1, agent=randomPlay)
         self.player_2 = Player(2, agent=randomPlay)
         self.player_1.set_hand(our_hand)
@@ -33,7 +33,9 @@ class RandomGame(object):
         self.turn_no = 0
         self.winner = 0 #will be 1 if player 1 wins, and 2 if opponent wins
         
+        print("top of randomgame loop")
         while self.winner == 0:
+            print("inside randomgame loop")
             self.turn_no += 1
             if (self.turn_no == 1):
                 card_open = open_card
@@ -72,4 +74,4 @@ class RandomGame(object):
         
 
         self.player_1.identify_state(card_open)
-        agent.update(self.player_1.state, self.player_1.action)
+        #agent.update(self.player_1.state, self.player_1.action)

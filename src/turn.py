@@ -11,6 +11,7 @@ class Turn(object):
         - Counter action by oposite player in case of PL2 or PL4
     """
     def __init__(self, deck, player_1, player_2, agent):
+        print("in turn init")
         """
         Turn is initialized with standard deck, players and an open card
         """
@@ -29,6 +30,7 @@ class Turn(object):
             
     
     def start_up(self):
+        print("in turn startup")
         while self.card_open.value not in range(0,10):
             print (f'Inital open card {self.card_open.print_card()} has to be normal')
             self.card_open = self.deck.draw_from_deck()
@@ -40,6 +42,7 @@ class Turn(object):
             self.player_2.draw(self.deck, self.card_open)
             
     def action(self, player, opponent, agent, algorithm):
+        print("in turn action")
         """
         Only reflecting the active players' action if he hand has not won yet.
         Only one player is leveraging the RL-algorithm, while the other makes random choices.
@@ -106,6 +109,7 @@ class Turn(object):
             #player_pas.agent.played_cards = self.deck.cards_disc
         
     def action_plus(self, player, opponent, penalty):
+        print("in turn action_plus")
         """
         Reflecting the process when a PL2 or PL4 is played. In case the opponent is able to counter with the same type of card he will.
         This continues until a player does not have the respective card.

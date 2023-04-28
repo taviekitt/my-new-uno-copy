@@ -14,16 +14,19 @@ class Game(object):
     It initialized with two players and a turn object.
     """
     def __init__(self, player_1_name, player_2_name, starting_name, agent, algorithm, comment):
+        print("in game")
         if comment == False: block_print()
         
         self.player_1 = Player(player_1_name, agent=agent)
         self.player_2 = Player(player_2_name, agent=agent)
+        print("in game, created players")
         self.turn = Turn(
             deck=Deck(), 
             player_1=self.player_1, 
             player_2=self.player_2, 
             agent=agent
         )
+        print("in game, past turn")
         self.turn_no = 0
         self.winner = 0
 
@@ -88,8 +91,10 @@ def tournament(iterations, algo, comment, agent_info):
     if algo == "q-learning":
         agent = QLearningAgent(agent_info)
     elif algo == "statelessmonte":
+        print("in game, calling agent as statelessmonte carlo")
         agent = StatelessMonteCarloAgent(agent_info) #CALLED HERE. What is in agent_info?
     else:
+        print("in game, calling agent as randomPlay")
         agent = randomPlay(agent_info)
     
     winners, turns, coverage = list(), list(), list()

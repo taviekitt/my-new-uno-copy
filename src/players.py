@@ -18,7 +18,8 @@ class Player(object):
         self.action       = 0
         self.agent        = agent
         agent.prev_state  = 0
-        self.num_opp_hand = 7
+        self.num_opp_hand = 7 #TODO: track as we go along
+        print("in players init")
     
     def set_hand(self, new_hand):
         if type(new_hand) == 'int':
@@ -115,6 +116,7 @@ class Player(object):
             self.actions[key] = min([1 if card.value == key else 0 for card in self.hand_play].count(1),1)
      
     def play_agent(self, deck, card_open, agent, algorithm):
+        print("in players play_agent")
         """
         Reflecting a players' intelligent move supported by the RL-algorithm, that consists of:
             - Identification of the players' state and available actions
@@ -131,7 +133,11 @@ class Player(object):
         self.identify_action()
         
         # selects action
-        self.action = agent.step(self.state, self.actions, card_open, self.hand, self.num_opp_hand, deck.cards_disc)
+        #played_cards = deck.cards_disc
+        print("agent is: ", agent)
+        played_cards = deck
+        self.action = agent.step(self.state, self.actions, card_open, self.hand, self.num_opp_hand, played_cards)
+        #step(self, state_dict, actions_dict, open_card, hand, num_opp_hand, played_cards):
         #TODO: why is self.hand integer?
 
         # Selected action searches corresponding card

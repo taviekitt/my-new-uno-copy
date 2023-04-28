@@ -49,7 +49,7 @@ class StatelessMonteCarloAgent(Agent):
         win_loss_tracker = np.zeros((len(actions_possible)), dtype = int) #first row records total wins, second losses
         if len(actions_possible) == 1: #if only one feasible action
             return actions_possible[0] #play it
-        for action in actions_possible:
+        for action in range(len(actions_possible)):
             for i in range(ACTION_ITERS):
                 #play action. For opponent...
                 #make new deck
@@ -73,7 +73,7 @@ class StatelessMonteCarloAgent(Agent):
         
         #play action with highest likelihood of winning
                       
-        return action_possible[index]
+        return actions_possible[index]
     
 
     def assumeHand(played_cards): #returns a list of cards
@@ -98,7 +98,7 @@ class QLearningAgent(Agent):
         self.prev_state  = 0
         self.prev_action = 0
     
-    def step(self, state_dict, actions_dict, open_card, hand, num_opp_hand, played_cards):
+    def step(self, state_dict, actions_dict, open_card, hand, num_opp_hand, played_cards=None):
         """
         Choose the optimal next action according to the followed policy.
         Required parameters:
@@ -178,7 +178,7 @@ class MonteCarloAgent(Agent):
         self.action_seen = list()
         self.q_seen      = list()
     
-    def step(self, state_dict, actions_dict, open_card, hand, num_opp_hand, played_cards):
+    def step(self, state_dict, actions_dict, open_card, hand, num_opp_hand, played_cards=None):
         """
         Choose the optimal next action according to the followed policy.
         Required parameters:
