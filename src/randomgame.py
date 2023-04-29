@@ -21,6 +21,8 @@ class RandomGame(object):
         self.player_2 = Player(2, agent=randomPlay)
         self.player_1.set_hand(our_hand)
         deck = Deck() #TODO: figure out how to use remove_list(played_cards) to remove discarded cards
+        deck.discardList(played_cards)
+        deck.discardList(our_hand)
         self.player_2.set_hand_num(num_opp_hand, deck)
         self.card_open = open_card
         #TODO: need to evaluate hands based on open card? functionality note done in draw
@@ -74,4 +76,3 @@ class RandomGame(object):
         
 
         self.player_1.identify_state(card_open)
-        #agent.update(self.player_1.state, self.player_1.action)

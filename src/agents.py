@@ -30,7 +30,7 @@ class Agent(object):
 #to pick the card most likely to win
 class StatelessMonteCarloAgent(Agent):
     def __init__(self, agent_info:dict):        
-        
+        print("in stateless monte carlo init")
         super().__init__(agent_info)
         self.prev_state  = 0
         self.prev_action = 0
@@ -43,14 +43,14 @@ class StatelessMonteCarloAgent(Agent):
     #and the number of cards held by player 2
     def step(self, state_dict, actions_dict, open_card, hand, num_opp_hand, played_cards):
         print("in step, hand is: ", type(hand))
-        ACTION_ITERS = 1000
+        ACTION_ITERS = 100
         actions_possible = [key for key,val in actions_dict.items() if val != 0]
-        #random.shuffle(actions_possible) #necessary?
-        win_loss_tracker = np.zeros((len(actions_possible)), dtype = int) #first row records total wins, second losses
+        win_tracker = np.zeros((len(actions_possible)), dtype = int)
         if len(actions_possible) == 1: #if only one feasible action
             return actions_possible[0] #play it
         for action in range(len(actions_possible)):
             for i in range(ACTION_ITERS):
+                
                 #play action. For opponent...
                 #make new deck
                 #draw opponent_card_num cards
@@ -58,17 +58,18 @@ class StatelessMonteCarloAgent(Agent):
                 #play game with this hand playing randomly
                 #and player 1 playing randomly as well?
                 #record who won in win_loss_tracker based on action (first card played) 
+                
                 won = RandomGame(open_card, hand, num_opp_hand, played_cards).winner
                  #TODO: num_opp_hand does not update (change from 7)
                 print("player: ", won, "won the simulated battle")
                 if won == 1:
-                    win_loss_tracker[action] += 1
+                    win_tracker[action] += 1
         #calculate win_loss_proportions based on tracker -> tracker[0] / tracker.sum of column
         max_win = 0
         index = 0
-        for i in range(len(win_loss_tracker)):
-            if max_win < win_loss_tracker[i]:
-                max_win = win_loss_tracker[i]
+        for i in range(len(win_tracker)):
+            if max_win < win_tracker[i]:
+                max_win = win_tracker[i]
                 index = i
         
         #play action with highest likelihood of winning

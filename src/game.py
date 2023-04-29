@@ -15,7 +15,7 @@ class Game(object):
     """
     def __init__(self, player_1_name, player_2_name, starting_name, agent, algorithm, comment):
         print("in game")
-        if comment == False: block_print()
+        #if comment == False: block_print()
         
         self.player_1 = Player(player_1_name, agent=agent)
         self.player_2 = Player(player_2_name, agent=agent)
@@ -122,6 +122,7 @@ def tournament(iterations, algo, comment, agent_info):
             )
 
         winners.append(game.winner)
+        print("winners of game: ", winners)
         turns.append(game.turn_no)
         coverage.append((agent.q != 0).values.sum())
 

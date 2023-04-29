@@ -9,6 +9,7 @@ class Player(object):
     """
     
     def __init__(self, name, agent):
+        print("player init")
         self.name         = name
         self.hand         = list()
         self.hand_play    = list()
@@ -22,11 +23,13 @@ class Player(object):
         print("in players init")
     
     def set_hand(self, new_hand):
+        print("player set_hand")
         if type(new_hand) == 'int':
             print("Error in set_hand. new_hand is int")
         self.hand = new_hand[:]
         
     def set_hand_num(self, num_new_hand, deck):
+        print("player set_hand_num")
         self.hand = list()
         for i in range(num_new_hand):
             card = deck.draw_from_deck()
@@ -34,6 +37,7 @@ class Player(object):
         #need to evaluate cards based on open_card?
         
         def draw_from_deck(self):
+            print("player draw_from_deck")
             if len(self.cards) == 0:
                 self.cards = self.cards_disc
                 self.cards_disc = []
@@ -41,6 +45,7 @@ class Player(object):
             return self.cards.pop()
     
     def evaluate_hand(self, card_open):
+        print("player evaluate hand")
         """
         Loops through each card in players' hand. Evaluation depends on card open.
         Required parameters: card_open as card
@@ -52,6 +57,7 @@ class Player(object):
                 self.hand_play.append(card)
     
     def draw(self, deck, card_open):
+        print("player draw")
         """
         Adds a card to players' hand and evaluates the hand
         Required parameters:
@@ -64,6 +70,7 @@ class Player(object):
         print (f'{self.name} draws {card.print_card()}')
         
     def identify_state(self, card_open):
+        print("player id state")
         """
         The state of the player is identified by looping through players' hand for each property of the state.
         """
@@ -96,6 +103,7 @@ class Player(object):
                 self.state[key+"#"] = min([1 if card.value == key else 0 for card in self.hand_play].count(1),val)
     
     def identify_action(self):
+        print("player id action")
         """
         All actions are evaluated if they are available to the player, dependent on his hand and card_open.
         """
@@ -133,12 +141,10 @@ class Player(object):
         self.identify_action()
         
         # selects action
-        #played_cards = deck.cards_disc
+        played_cards = deck.cards_disc
         print("agent is: ", agent)
-        played_cards = deck
+        #played_cards = deck
         self.action = agent.step(self.state, self.actions, card_open, self.hand, self.num_opp_hand, played_cards)
-        #step(self, state_dict, actions_dict, open_card, hand, num_opp_hand, played_cards):
-        #TODO: why is self.hand integer?
 
         # Selected action searches corresponding card
         # (1) Playing wild card
@@ -186,6 +192,7 @@ class Player(object):
             agent.update(self.state, self.action)      
 
     def play_rand(self, deck):
+        print("player play_rand")
         """
         Reflecting a players' random move, that consists of:
             - Shuffling players' hand cards
@@ -209,6 +216,7 @@ class Player(object):
             self.card_play.color = self.choose_color()  
             
     def play_counter(self, deck, card_open, plus_card):
+        print("player play_counter")
         """
         Reflecting a players' counter move to a plus card.
         Required parameters:

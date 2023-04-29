@@ -1,5 +1,5 @@
 params = {
-    "iterations": 5,
+    "iterations": 20,
     "algorithm": "statelessmonte", # ["q-learning", "monte-carlo"]
     "logging": False,
     "model": {

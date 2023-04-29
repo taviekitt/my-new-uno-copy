@@ -98,9 +98,10 @@ class Turn(object):
                              opponent = player_pas, 
                              penalty  = 2)
             
-        #if player_act != self.player_1 and algorithm == "statelessmonte": #update agent
-            #player.pas_agent.opp_hand = len(player_act.hand) #TODO: where are these stored?
-            #player.pas_agent.open_card = card_open #TODO: do these exist?
+        player_pas.num_opp_hand = len(player_act.hand)
+        player_act.num_opp_hand = len(player_pas.hand)
+            
+        
        # elif player_act == self.player_1 and algorithm == "statelessmonte":
             #player_act.agent.our_hand = player_act.hand #TODO: where are these stored?
             #player_act.agent_open_card = self.card_open #TODO: do these exist?
